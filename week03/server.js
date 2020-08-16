@@ -14,20 +14,22 @@ http.createServer((request, response) => {
 `<html maaa=a >
   <head>
     <style>
-      body div #myid{
+      body div .bigpic#myid{
         width: 100px;
         background-color: #ff5000;
       }
-      body div img{
+      body ul li .asd.qwed#qwe{
         width: 30px;
         background-color: #ff1111;
       }
     </style>
   </head>
   <body>
+  <ul>
+  <li>as<div id="qwe" class="asd qwed">dqq</div></li></ul>
     <div>
-      <img id="myid" />
-      <img />
+      <img class="bigpic" id="myid" />
+      <img class="bigpic" />
     </div>
   </body>
 </html>`);

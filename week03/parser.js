@@ -13,38 +13,149 @@ function addCSSRules(text) {
   rules.push(...ast.stylesheet.rules);
 }
 
-function match(element, selector) {
-  if (!selector || !element.attributes) {
+function match(element, allSelector) {
+  if (!allSelector || !element.attributes) {
     return false;
   }
-  if (selector.charAt(0) === '#') {
-    let attr = element.attributes.filter(attr => attr.name === "id")[0]
-    if (attr && attr.value === selector.replace('#',''))
-      return true
-  } else if (selector.charAt(0) == '.') {
-    let attr = element.attributes.filter(attr => attr.name === "class")[0]
-    if (attr && attr.value === selector.replace('.',''))
-      return true;
-  } else {
-    if (element.tagName === selector) {
-      return true;
+  let tagSelector = [];
+  let idSelector = [];
+  let classSelector = [];
+  let start = selectorStart;
+  let currentSelectorName = "";
+  for (let c of allSelector) {
+    start = start(c)
+  }
+  start(EOF);
+  function selectorStart(c) {
+    if (c === '.') {
+      return classSelectorName;
+    } else if(c === '#') {
+      return idSelectorName;
+    } else if(c === EOF) {
+      return ;
+    } else {
+      return selectorName(c)
     }
   }
+  function classSelectorName(c) {
+    if (c === '.' || c === '#' || c === EOF) {
+      classSelector.push(currentSelectorName);
+      currentSelectorName = "";
+      return selectorStart(c);
+    } else {
+      currentSelectorName += c
+      return classSelectorName;
+    }
+  }
+  function idSelectorName(c) {
+    if (c === '.' || c === '#' || c === EOF) {
+      idSelector.push(currentSelectorName);
+      currentSelectorName = "";
+      return selectorStart(c);
+    } else {
+      currentSelectorName += c
+      return idSelectorName;
+    }
+  }
+  function selectorName(c) {
+    if (c === '.' || c === '#' || c === EOF) {
+      tagSelector.push(currentSelectorName);
+      currentSelectorName = "";
+      return selectorStart(c);
+    } else {
+      currentSelectorName += c
+      return selectorName;
+    }
+  }
+  let count = 0;
+  if (idSelector.length !== 0) {
+    let attr = element.attributes.filter(attr => attr.name === "id")[0]
+    if (attr) {
+      let ids = attr.value.split(" ")
+      for (let i = 0;i < idSelector.length;i++) {
+        if(ids.includes(idSelector[i])) count++;
+      }
+    }
+  }
+  if (classSelector.length !== 0) {
+    let attr = element.attributes.filter(attr => attr.name === "class")[0]
+    if (attr) {
+      let classNames = attr.value.split(" ")
+      for (let i = 0;i < classSelector.length;i++) {
+        if(classNames.includes(classSelector[i])) count++;
+      }
+    }
+  }
+  if (tagSelector.length !== 0) {
+    if (element.tagName === tagSelector[0]) {
+      count ++;
+    }
+  }
+  let sumLength = idSelector.length + classSelector.length + tagSelector.length
+  return count === sumLength
+  
   //TODO 新的selector
 }
 function specificity(selector) {
   let p = [0, 0, 0, 0];
-  let selectorParts = selector.split(' ');
-  for (let part of selectorParts) {
-    if (part.charAt(0) === '#') {
-      p[1] += 1
-    } else if (part.charAt(0) === '.') {
-      p[2] += 1
+  let tagSelector = [];
+  let idSelector = [];
+  let classSelector = [];
+  let start = selectorStart;
+  let currentSelectorName = "";
+  for (let c of selector) {
+    start = start(c)
+  }
+  start(EOF);
+  p[1] = idSelector.length;
+  p[2] = classSelector.length;
+  p[3] = tagSelector.length;
+  console.log(p)
+  return p
+  
+  function selectorStart(c) {
+    if (c === '.') {
+      return classSelectorName;
+    } else if(c === '#') {
+      return idSelectorName;
+    } else if(c === EOF) {
+      return ;
+    } else if (c === ' ') {
+      return selectorStart;
     } else {
-      p[3] += 1;
+      return selectorName(c)
     }
   }
-  return p
+  function classSelectorName(c) {
+    if (c === '.' || c === '#' || c === ' ' || c === EOF) {
+      classSelector.push(currentSelectorName);
+      currentSelectorName = "";
+      return selectorStart(c);
+    } else {
+      currentSelectorName += c
+      return classSelectorName;
+    }
+  }
+  function idSelectorName(c) {
+    if (c === '.' || c === '#' || c === ' ' || c === EOF) {
+      idSelector.push(currentSelectorName);
+      currentSelectorName = "";
+      return selectorStart(c);
+    } else {
+      currentSelectorName += c
+      return idSelectorName;
+    }
+  }
+  function selectorName(c) {
+    if (c === '.' || c === '#' || c === ' ' || c === EOF) {
+      tagSelector.push(currentSelectorName);
+      currentSelectorName = "";
+      return selectorStart(c);
+    } else {
+      currentSelectorName += c
+      return selectorName;
+    }
+  }
 }
 function compare(sp1, sp2) {
   if(sp1[0] - sp2[0])
@@ -61,7 +172,7 @@ function computeCSS(element) {
   if(!element.computedStyle) 
     element.computedStyle = {}
   for (let rule of rules) {
-    var selectorParts = rule.selectors[0].split(" ").reverse();
+    let selectorParts = rule.selectors[0].split(" ").reverse();
 
     if (!match(element, selectorParts[0]))
       continue;
@@ -70,7 +181,7 @@ function computeCSS(element) {
     
     let j = 1;
     for (let i = 0;i<elements.length;i++) {
-      if (match(elements[i], electorParts[j])) {
+      if (match(elements[i], selectorParts[j])) {
         j++;
       }
     }
@@ -276,7 +387,7 @@ function beforeAttributeValue(c) {
 
 function doubleQuotedAttributeValue(c) {
   if (c === '\"') {
-    currentToken[currentAttribute.name] = currentToken.value;
+    currentToken[currentAttribute.name] = currentAttribute.value;
     return afterQuotedAttributeValue;
   } else if (c === '\u0000') {
 

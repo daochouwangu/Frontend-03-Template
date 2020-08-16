@@ -151,7 +151,7 @@ void async function () {
   try {
     let response = await request.send();
     let dom = parser.parseHTML(response.body)
-    console.log(JSON.stringify(dom, null. "    "))
+    console.log(JSON.stringify(dom, null, "    "))
   } catch(err) {
     console.error(err)
   }

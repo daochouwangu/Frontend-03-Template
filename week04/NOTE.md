@@ -27,3 +27,11 @@
 ### 计算交叉轴
 
 1. 每一行元素中最大的元素就是交叉轴大小
+2. stretch情况下 没定义size 则占满
+3. 根据行高flex-align 和 item-align 确定元素位置
+
+### 绘制dom
+
+1. 使用images库进行模拟绘制，完整模拟需要webGL ， 目前只绘制background-color
+2. 获取元素的位置，和background-color，然后调用images库绘制
+3. 绘制dom树 则递归调用

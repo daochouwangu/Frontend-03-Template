@@ -313,10 +313,6 @@ function layout(element) {
       let itemStyle = getStyle(item);
 
       let align = itemStyle.alignSelf || style.alignItems;
-      if (item === null) {
-        itemStyle[crossSize] = (align === 'stretch') ?
-          lineCrossSize : 0;
-      }
       // 高度没定义则占满
       if (itemStyle[crossSize] === null || itemStyle[crossSize] === (void 0) ) {
         itemStyle[crossSize] = (align === 'stretch') ? lineCrossSize : 0;
@@ -345,7 +341,6 @@ function layout(element) {
     }
     crossBase += crossSign * (lineCrossSize + step);
   });
-  console.log(items);
 }
 
 

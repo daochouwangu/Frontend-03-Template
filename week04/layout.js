@@ -317,8 +317,9 @@ function layout(element) {
         itemStyle[crossSize] = (align === 'stretch') ?
           lineCrossSize : 0;
       }
+      // 高度没定义则占满
       if (itemStyle[crossSize] === null || itemStyle[crossSize] === (void 0) ) {
-        itemStyle[crossSize] = 0;
+        itemStyle[crossSize] = (align === 'stretch') ? lineCrossSize : 0;
       }
       if (align === 'flex-start') {
         itemStyle[crossStart] = crossBase;
@@ -337,9 +338,9 @@ function layout(element) {
 
       if (align === 'stretch') {
         itemStyle[crossStart] = crossBase;
-        itemStyle[crossEnd] = crossBase + crossSign * lineCrossSize
+        itemStyle[crossEnd] = crossBase + crossSign * itemStyle[crossSize];
         //TODO crossEnd计算可能有误
-        itemStyle[crossSize] = crossSign * (itemStyle[crossEnd] - itemStyle[crossStart])
+        itemStyle[crossSize] = crossSign * itemStyle[crossSize]
       }
     }
     crossBase += crossSign * (lineCrossSize + step);

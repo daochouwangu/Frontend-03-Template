@@ -1,6 +1,6 @@
 const css = require('css');
 const EOF = Symbol("EOF");
-const layout = require('./layout.js')
+const layout = require('./layout.js');
 let currentToken = null;
 let currentAttribute = null;
 let currentTextNode = null;
@@ -470,5 +470,5 @@ module.exports.parseHTML = function parseHTML(html) {
     state = state(c);
   }
   state = state(EOF);
-  return stack
+  return stack[0]
 }

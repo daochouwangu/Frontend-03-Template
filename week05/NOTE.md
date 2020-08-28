@@ -21,8 +21,8 @@
      - Selector
        - selector_group
        - selector
-         - >
-         - <sp>
+         - \>
+         - \<sp\>
          - \+
          - ~
        - simple_selector

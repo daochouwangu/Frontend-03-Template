@@ -143,8 +143,6 @@
 4. HSV V表示明度 value100% 最亮,L 100 纯白色,0纯黑色,中间是纯色
 5. HSL的优势:
    1. 统一换颜色,亮度纯度不会变,更加协调
-animation-delay
-    Specifies when the animation will start.
 
 ### 绘制
 

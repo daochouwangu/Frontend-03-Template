@@ -1,4 +1,3 @@
-/*
 [
   "Object",
   "Function",
@@ -25,8 +24,8 @@
   "globalThis",
   "JSON",
   "Math",
-  "console", https://console.spec.whatwg.org/
-  "Intl", 402
+  "console",
+  "Intl",
   "ArrayBuffer",
   "Uint8Array",
   "Int8Array",
@@ -51,20 +50,14 @@
   "decodeURIComponent",
   "encodeURI",
   "encodeURIComponent",
-  "escape", 废弃
-  "unescape", 废弃
+  "escape",
+  "unescape",
   "eval",
   "isFinite",
   "isNaN",
-
-  webrtc: https://w3c.github.io/webrtc-pc/
   "webkitRTCPeerConnection",
   "webkitMediaStream",
-
-  html: https://html.spec.whatwg.org/multipage/web-sockets.html#the-websocket-interface
   "WebSocket",
-
-  webgl: https://www.khronos.org/registry/webgl/specs/latest/2.0
   "WebGLVertexArrayObject",
   "WebGLUniformLocation",
   "WebGLTransformFeedback",
@@ -82,29 +75,18 @@
   "WebGLBuffer",
   "WebGLActiveInfo",
   "WebGL2RenderingContext",
-
-  webaudio: https://webaudio.github.io/web-audio-api/#the-waveshapernode-interface
-  "WaveShaperNode": "https://developer.mozilla.org/en-US/docs/Web/API/WaveShaperNode",
-  "StereoPannerNode": "https://developer.mozilla.org/en-US/docs/Web/API/StereoPannerNode",
-  "ScriptProcessorNode": "https://developer.mozilla.org/en-US/docs/Web/API/ScriptProcessorNode",
-
-  encoding: https://encoding.spec.whatwg.org/
+  "WaveShaperNode",
   "TextEncoderStream",
   "TextEncoder",
   "TextDecoderStream",
   "TextDecoder",
-
-  background-sync: "https://wicg.github.io/background-sync/spec/#sync-manager-interface"
   "SyncManager",
-
-  webstorage: "https://html.spec.whatwg.org/multipage/webstorage.html#the-storageevent-interface"
   "StorageEvent",
   "Storage",
-
-  media-source: "https://w3c.github.io/media-source/#sourcebufferlist"
-  "SourceBufferList": "https://developer.mozilla.org/en-US/docs/Web/API/SourceBufferList",
-  "SourceBuffer": "https://developer.mozilla.org/en-US/docs/Web/API/SourceBuffer",
-  
+  "StereoPannerNode",
+  "SourceBufferList",
+  "SourceBuffer",
+  "ScriptProcessorNode",
   "ScreenOrientation",
   "RTCTrackEvent",
   "RTCStatsReport",
@@ -963,88 +945,50 @@
   "XRRay",
   "XRTransientInputHitTestResult",
   "XRTransientInputHitTestSource",
-  "__REACT_DEVTOOLS_GLOBAL_HOOK__"
+  "__REACT_DEVTOOLS_GLOBAL_HOOK__",
+  "_hsq",
+  "_paq",
+  "_hstc_loaded",
+  "_hsp",
+  "_hspb_loaded",
+  "__context__",
+  "webpackJsonp",
+  "regeneratorRuntime",
+  "_",
+  "process",
+  "__onCookieOptIn",
+  "_hstc_ran",
+  "__hsUserToken",
+  "expireDateTime",
+  "_hspb_ran",
+  "__REACT_DEVTOOLS_APPEND_COMPONENT_STACK__",
+  "__REACT_DEVTOOLS_BREAK_ON_CONSOLE_ERRORS__",
+  "__REACT_DEVTOOLS_COMPONENT_FILTERS__",
+  "dir",
+  "dirxml",
+  "profile",
+  "profileEnd",
+  "clear",
+  "table",
+  "keys",
+  "values",
+  "debug",
+  "undebug",
+  "monitor",
+  "unmonitor",
+  "inspect",
+  "copy",
+  "queryObjects",
+  "$_",
+  "$0",
+  "$1",
+  "$2",
+  "$3",
+  "$4",
+  "getEventListeners",
+  "monitorEvents",
+  "unmonitorEvents",
+  "$",
+  "$$",
+  "$x"
 ]
-*/
-// apis
-const apis = [
-  {
-    "name": "ECMA262",
-    "url": "https://tc39.es/ecma262",
-    "rules": [
-      "Object",
-      "Function",
-      "Array",
-      "Number",
-      "parseFloat",
-      "parseInt",
-      "Infinity",
-      "NaN",
-      "undefined",
-      "Boolean",
-      "String",
-      "Symbol",
-      "Date",
-      "Promise",
-      "RegExp",
-      "Error",
-      "EvalError",
-      "RangeError",
-      "ReferenceError",
-      "SyntaxError",
-      "TypeError",
-      "URIError",
-      "globalThis",
-      "JSON",
-      "Math",
-      "console",
-      "Intl",
-      "ArrayBuffer",
-      "Uint8Array",
-      "Int8Array",
-      "Uint16Array",
-      "Int16Array",
-      "Uint32Array",
-      "Int32Array",
-      "Float32Array",
-      "Float64Array",
-      "Uint8ClampedArray",
-      "BigUint64Array",
-      "BigInt64Array",
-      "DataView",
-      "Map",
-      "BigInt",
-      "Set",
-      "WeakMap",
-      "WeakSet",
-      "Proxy",
-      "Reflect",
-      "decodeURI",
-      "decodeURIComponent",
-      "encodeURI",
-      "encodeURIComponent",
-      "escape",
-      "unescape",
-      "eval",
-      "isFinite",
-      "isNaN",
-    ]
-  }
-]
-let names = Object.getOwnPropertyNames(window);
-window.names = names;
-let el = document.getElementById("content")
-let frag = document.createDocumentFragment();
-apis.forEach((api,i) => {
-  api.rules.forEach((e, i) => {
-    let node = document.createElement("li");
-    let a = document.createElement("a");
-    a.innerText = e.name
-    a.href = e.url
-    node.appendChild(a);
-    frag.appendChild(node);
-  })
-  
-})
-el.appendChild(frag);
-

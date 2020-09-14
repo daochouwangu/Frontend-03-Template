@@ -21,9 +21,9 @@ let countAll = names.length;
 names = filterNames(names, res);
 console.log(names.length);
 (async () => {
-  await Promise.allSettled(names.map((e, i) => {
-    return createMission(e)
-  }))
+  // await Promise.allSettled(names.map((e, i) => {
+  //   return createMission(e)
+  // }))
   writeJson();
   writeHTML();
 })()
@@ -119,14 +119,14 @@ function writeHTML() {
 }
 function getData() {
   let str = "<div class='notIn'>未收录: "
-  names.forEach((n) => str+=`<span>${n}</span>`)
+  names.forEach((n) => str+=`<span>${n}</span>\n`)
   str+="</div>"
   str+="<table><thead></thead><tbody>"
   str = Object.getOwnPropertyNames(res).reduce((acc, cur) => {
     acc += `<tr><td class="standard" colspan='2'>${cur}</td></tr>`;
     let v = res[cur];
     v.map((o) => {
-      acc += `<tr><td>${o.name}</td><td><a href=${o.href}>${o.href}</a></td></tr>`
+      acc += `<tr><td>${o.name}</td><td><a href="${o.href}">${o.href}</a></td></tr>\n`
     })
     return acc;
   },str)

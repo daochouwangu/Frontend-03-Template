@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    #light{
+      background-color: red;
+      width:100px;
+      height:100px;
+      border-radius: 50px;
+    }
+  </style>
+  <body>
+    <div id="timer">
+    </div>
+    <div id="light">
+    </div>
+    <script>
+      let timer = document.getElementById("timer");
+      let time = 1;
+      function addTime(){
+        timer.innerText = time++;
+      }
+      setInterval(() => addTime(), 1000)
+      let style = document.getElementById("light").style;
+      function setColor(color) {
+        style.backgroundColor = color;
+      }
+      // setInterval(() => setColor("green"),17000);
+      // setTimeout(() => {
+      //   setColor("yellow")
+      //   setInterval(() => setColor("yellow"),17000)
+      // }, 10000);
+      // setTimeout(() => {
+      //   setColor("red")
+      //   setInterval(() => setColor("red"),17000)
+      // }, 12000);
+      function sleep(time) {
+        return new Promise((resolve) => setTimeout(resolve,time))
+      }
+      async function go() {
+        while(true) {
+          setColor('green');
+          await sleep(10000)
+          setColor('yellow');
+          await sleep(2000)
+          setColor('red');
+          await sleep(5000)
+        }
+      }
+      go();
+    </script>
+  </body>
+</html>

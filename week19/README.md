@@ -46,5 +46,29 @@ fs.createReadStream, 有data事件，表示收到数据，end事件，表示读�
 
 ### 第三步，使用archiver进行压缩，实现多文件上传
 
-node readable.pipe
-//file.pipe(request)
+客户端引入archiver 压缩文件
+
+```javascript
+const archive = archiver('zip', {
+  zlib: {level:9}
+})
+archive.directory('./sample/', false);
+archive.finalize();
+archive.pipe(request)
+```
+
+服务端要使用unzipper 解压
+`request.pipe(unzipper.Extract({ path: '../server/public/' }))`
+
+## 接入权限
+
+### 使用github oauth系统
+
+1. 在github setting里创建app
+2. 记住client_id client_secret
+3. 鉴权5步： 
+   1. 客户端发起请求github,获取一串code
+   2. 服务端获得code，去请求github获取token
+   3. 服务端将token发回给客户端
+   4. 客户端带上token，发起发布请求，请求中带上token和要发布的文件
+   5. 服务端验证token，通过后发布文件
